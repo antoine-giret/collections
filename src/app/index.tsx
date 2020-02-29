@@ -1,5 +1,6 @@
 import React from 'react'
 
+import './i18n'
 import AppContext from './context'
 import AppNavigator from './navigator'
 
