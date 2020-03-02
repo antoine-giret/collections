@@ -41,6 +41,8 @@
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-react": "7.18.3",
     "eslint-plugin-unicorn": "16.1.1",
+    "firebase-admin": "8.9.2",
+    "firebase-functions": "3.3.0",
     "husky": "4.2.3",
     "prettier": "1.19.1",
     "pretty-quick": "2.0.1",
