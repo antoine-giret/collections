@@ -1,13 +1,17 @@
 import React from 'react'
 
-interface IAppContext {
-  user: null
+import User from '../models/user'
+
+export interface IAppContext {
+  updateCurrentUser: (user: User | null) => void
+  user: User | null | undefined
 }
 
-const context: IAppContext = {
-  user: null,
+export const INITIAL_CONTEXT: IAppContext = {
+  updateCurrentUser: () => {},
+  user: undefined,
 }
 
-const AppContext = React.createContext(context)
+const AppContext = React.createContext(INITIAL_CONTEXT)
 
 export default AppContext
