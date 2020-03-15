@@ -6,12 +6,23 @@ export interface IFirebaseUser {
 }
 
 export interface IFirebaseCollectionItem {
+  uuid: string
   title: string
+  imageUrl?: string
+  createdAt: firestore.Timestamp
+}
+
+export interface IFirebaseMusicItem extends IFirebaseCollectionItem {
+  artist: string
+}
+
+export interface IFirebaseBookItem extends IFirebaseCollectionItem {
+  author: string
 }
 
 export interface IFirebaseCollection {
   title: string
   type: string
-  items: IFirebaseCollectionItem[]
+  items?: (IFirebaseCollectionItem | IFirebaseMusicItem | IFirebaseBookItem)[]
   updatedAt: firestore.Timestamp
 }

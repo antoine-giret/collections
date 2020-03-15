@@ -1,6 +1,7 @@
 enum Screens {
   LOGIN = 'Login',
   HOME = 'Home',
+  COLLECTION = 'Collection',
   PROFILE = 'Profile',
 }
 

@@ -1,26 +1,33 @@
 import React from 'react'
-import { StyleSheet, TouchableHighlight, View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 
 import theme from '../../../../app/theme'
-import Collection from '../../../../models/collection'
+import { Collection } from '../../../../models'
+import Screens from '../../../../app/screens'
 
 interface IProps {
   collection: Collection
 }
 
-function CollectionItem({
-  collection: { uuid, title, icon, items, updatedAt },
-}: IProps) {
+function CollectionItem({ collection }: IProps) {
+  const { navigate } = useNavigation()
   const { t } = useTranslation()
+
+  function handlePress() {
+    navigate(Screens.COLLECTION, { uuid, title })
+  }
+
+  const { uuid, title, icon, items, updatedAt } = collection
 
   return (
     <View style={styles.wrapper}>
       <ListItem
         chevron
-        Component={TouchableHighlight}
+        Component={TouchableOpacity}
         containerStyle={styles.container}
         leftIcon={
           <Avatar
@@ -35,7 +42,7 @@ function CollectionItem({
             }}
           />
         }
-        onPress={() => console.log(uuid)}
+        onPress={handlePress}
         style={styles.overlay}
         subtitle={`${t('collection.items_count', {
           count: items.length,

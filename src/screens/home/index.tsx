@@ -3,7 +3,7 @@ import { InteractionManager } from 'react-native'
 import { Trans } from 'react-i18next'
 
 import AppContext from '../../app/context'
-import Collection from '../../models/collection'
+import { Collection } from '../../models'
 import CollectionService from '../../services/collection'
 import Loader from '../../components/loader'
 import Error from '../../components/error'

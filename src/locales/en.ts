@@ -1,8 +1,18 @@
 const en = {
   translation: {
-    navigator: {
-      login: 'Login',
-      home: 'Collections',
+    collection: {
+      error: 'Inventory in progress',
+      items_count: '{count, plural, =0 {No item} =1 {1 item} other {# items}}',
+      list: {
+        error: 'Inventory in progress',
+        loading: 'Inventory of your collections',
+      },
+      loading: 'Inventory of your collection',
+    },
+    commons: {
+      actions: {
+        back: 'Back',
+      },
     },
     login: {
       actions: {
@@ -10,12 +20,9 @@ const en = {
       },
       baseline: 'Each collection begins with a collector',
     },
-    collection: {
-      list: {
-        error: 'Inventory in progress',
-        loading: 'Inventory of your collections',
-      },
-      items_count: '{count, plural, =0 {No item} =1 {1 item} other {# items}}',
+    navigator: {
+      login: 'Login',
+      home: 'Collections',
     },
     profile: {
       actions: {

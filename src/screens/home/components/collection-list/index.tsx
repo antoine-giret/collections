@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 
-import Collection from '../../../../models/collection'
+import { Collection } from '../../../../models'
 
 import CollectionItem from './item'
 
