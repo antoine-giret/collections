@@ -2,7 +2,7 @@ import { GOOGLE_IOS_CLIENT_ID } from 'react-native-dotenv'
 import * as Google from 'expo-google-app-auth'
 import { auth as firebaseAuth } from 'firebase'
 
-import User from '../models/user'
+import { User } from '../models'
 
 import FirebaseService from './firebase'
 import UserService from './user'

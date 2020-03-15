@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AppLoading } from 'expo'
 
-import User from '../models/user'
+import { User } from '../models'
 import FirebaseService from '../services/firebase'
 import UserService from '../services/user'
 

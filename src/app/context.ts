@@ -1,6 +1,6 @@
 import React from 'react'
 
-import User from '../models/user'
+import { User } from '../models'
 
 export interface IAppContext {
   updateCurrentUser: (user: User | null) => void

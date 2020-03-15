@@ -1,7 +1,6 @@
 import { firestore } from 'firebase'
 
-import { IFirebaseUser } from '../models/firebase'
-import User from '../models/user'
+import { IFirebaseUser, User } from '../models'
 
 import FirebaseService from './firebase'
 
