@@ -50,10 +50,11 @@ const styles = StyleSheet.create({
     top: 0,
   },
   title: {
+    color: '#fff',
     fontSize: 16,
   },
   description: {
-    color: '#545454',
+    color: '#ccc',
   },
 })
 

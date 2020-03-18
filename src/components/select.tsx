@@ -39,12 +39,12 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   label: {
-    color: '#545454',
+    color: '#ccc',
     fontSize: 16,
     marginBottom: 8,
   },
   picker: {
-    backgroundColor: 'white',
+    backgroundColor: '#212121',
     borderColor: '#ccc',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   pickerItem: {
+    color: '#fff',
     fontSize: 16,
   },
 })

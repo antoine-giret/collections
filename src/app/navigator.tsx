@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import { DarkTheme, NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useTranslation } from 'react-i18next'
 
@@ -20,7 +20,7 @@ export default function AppNavigator() {
   const { t } = useTranslation()
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator>
         {user ? (
           <>

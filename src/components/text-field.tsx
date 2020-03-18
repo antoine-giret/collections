@@ -19,7 +19,7 @@ function TextField({ error, label, value, onChangeText }: IProps) {
     <View style={styles.wrapper}>
       <Text
         onPress={handleLabelPress}
-        style={[styles.label, { color: error ? '#f44336' : '#545454' }]}
+        style={[styles.label, { color: error ? '#f44336' : '#ccc' }]}
       >
         {label}
       </Text>
@@ -42,10 +42,11 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: '#212121',
     borderRadius: 8,
     borderStyle: 'solid',
     borderWidth: 1,
+    color: "#fff",
     fontSize: 16,
     height: 46,
     paddingHorizontal: 16,

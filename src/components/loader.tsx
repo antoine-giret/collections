@@ -9,7 +9,7 @@ function Loader({ text }: IProps) {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.text}>{text}</Text>
-      <ActivityIndicator size="large" style={styles.indicator} />
+      <ActivityIndicator color="#ddd" size="large" style={styles.indicator} />
     </View>
   )
 }
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   text: {
-    color: '#333',
+    color: '#ddd',
     fontSize: 24,
     fontWeight: '300',
   },

@@ -33,7 +33,7 @@ function CollectionItem({ collection }: IProps) {
           <Avatar
             rounded
             icon={{
-              type: 'material',
+              type: 'font-awesome',
               name: icon,
               color: theme.palette.primary.contrastText,
             }}
@@ -49,6 +49,7 @@ function CollectionItem({ collection }: IProps) {
         })} | ${moment(updatedAt).fromNow()}`}
         subtitleProps={{ style: styles.subtitle }}
         title={title}
+        titleProps={{ style: styles.title }}
       />
     </View>
   )
@@ -62,10 +63,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   container: {
+    backgroundColor: '#212121',
     borderRadius: 8,
   },
+  title: {
+    color: '#fff',
+  },
   subtitle: {
-    color: '#545454',
+    color: '#ccc',
   },
 })
 

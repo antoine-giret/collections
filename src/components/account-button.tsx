@@ -10,6 +10,7 @@ interface IProps {
 function AccountButton({ navigation }: IProps) {
   return (
     <Icon
+      color="#fff"
       containerStyle={{ marginHorizontal: 16 }}
       name="account-circle"
       onPress={() => navigation.navigate(Screens.PROFILE)}

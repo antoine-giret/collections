@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   baseline: {
+    color: '#fff',
     fontSize: 48,
   },
   divider: {

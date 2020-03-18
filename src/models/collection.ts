@@ -9,10 +9,10 @@ export enum CollectionTypes {
 }
 
 function getIcon(type: CollectionTypes) {
-  if (type === CollectionTypes.MUSIC) return 'music-note'
+  if (type === CollectionTypes.MUSIC) return 'music' // TODO: use record-vinyl or compact-disc when available
   if (type === CollectionTypes.BOOK) return 'book'
 
-  return 'collections'
+  return 'star'
 }
 
 class Collection {
