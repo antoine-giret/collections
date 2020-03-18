@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
+import { InteractionManager } from 'react-native'
 import { AppLoading } from 'expo'
 
-import { User } from '../models'
-import FirebaseService from '../services/firebase'
-import UserService from '../services/user'
+import { Collection, User } from '../models'
+import { CollectionService, FirebaseService, UserService } from '../services'
 
 import './i18n'
 import AppContext, { IAppContext, INITIAL_CONTEXT } from './context'
@@ -14,7 +14,15 @@ export default function App() {
   const [isReady, setReady] = useState(false)
 
   function updateCurrentUser(user: User | null) {
-    setContext({ ...context, user })
+    setContext({ ...context, user, collections: undefined })
+
+    if (user) {
+      InteractionManager.runAfterInteractions(async () => {
+        const collections = await CollectionService.getCollections(user.uuid)
+
+        setContext({ ...context, user, collections })
+      })
+    }
   }
 
   async function init() {
@@ -23,11 +31,13 @@ export default function App() {
       auth.onAuthStateChanged(() => resolve())
     })
 
-    const [user] = await Promise.all([
-      UserService.getInstance().getCurrentUser(),
-    ])
+    const user = await UserService.getInstance().getCurrentUser()
 
-    setContext({ ...context, user })
+    const collections = user
+      ? await CollectionService.getCollections(user.uuid)
+      : undefined
+
+    setContext({ ...context, user, collections })
   }
 
   if (!isReady) {

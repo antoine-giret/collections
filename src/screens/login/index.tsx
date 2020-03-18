@@ -4,7 +4,7 @@ import { Divider, SocialIcon } from 'react-native-elements'
 import { Trans, useTranslation } from 'react-i18next'
 
 import AppContext from '../../app/context'
-import AuthService from '../../services/auth'
+import { AuthService } from '../../services'
 
 function LoginScreen() {
   const [signingIn, setSigningIn] = useState(false)

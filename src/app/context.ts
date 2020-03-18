@@ -1,13 +1,15 @@
 import React from 'react'
 
-import { User } from '../models'
+import { Collection, User } from '../models'
 
 export interface IAppContext {
+  collections?: Collection[] | null
   updateCurrentUser: (user: User | null) => void
-  user: User | null | undefined
+  user?: User | null
 }
 
 export const INITIAL_CONTEXT: IAppContext = {
+  collections: undefined,
   updateCurrentUser: () => {},
   user: undefined,
 }

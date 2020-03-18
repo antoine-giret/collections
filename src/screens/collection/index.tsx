@@ -3,7 +3,7 @@ import { useRoute } from '@react-navigation/native'
 import { Trans } from 'react-i18next'
 
 import { Collection } from '../../models'
-import CollectionService from '../../services/collection'
+import { CollectionService } from '../../services'
 import Loader from '../../components/loader'
 import Error from '../../components/error'
 

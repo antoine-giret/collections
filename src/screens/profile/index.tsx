@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements'
 import { useTranslation } from 'react-i18next'
 
 import AppContext from '../../app/context'
-import AuthService from '../../services/auth'
+import { AuthService } from '../../services'
 
 function ProfileScreen() {
   const { updateCurrentUser } = useContext(AppContext)

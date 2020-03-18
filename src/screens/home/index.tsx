@@ -1,30 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { InteractionManager } from 'react-native'
+import React, { useContext } from 'react'
 import { Trans } from 'react-i18next'
 
 import AppContext from '../../app/context'
-import { Collection } from '../../models'
-import CollectionService from '../../services/collection'
 import Loader from '../../components/loader'
 import Error from '../../components/error'
 
 import CollectionList from './components/collection-list'
 
 function HomeScreen() {
-  const [collections, setCollections] = useState<
-    Collection[] | null | undefined
-  >()
-  const { user } = useContext(AppContext)
-
-  useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
-      getCollections()
-    })
-  }, [])
-
-  async function getCollections() {
-    setCollections(await CollectionService.getCollections(user.uuid))
-  }
+  const { collections } = useContext(AppContext)
 
   if (collections === undefined) {
     return (
