@@ -21,8 +21,14 @@ export interface IFirebaseBookItem extends IFirebaseCollectionItem {
 }
 
 export interface IFirebaseCollection {
+  owner: string
   title: string
   type: string
   items?: (IFirebaseCollectionItem | IFirebaseMusicItem | IFirebaseBookItem)[]
   updatedAt: firestore.Timestamp
+}
+
+export interface IFirebaseCreateCollection {
+  title: string
+  type: string
 }

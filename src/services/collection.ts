@@ -8,6 +8,7 @@ import {
   IFirebaseBookItem,
   IFirebaseCollection,
   IFirebaseCollectionItem,
+  IFirebaseCreateCollection,
   IFirebaseMusicItem,
   MusicItem,
 } from '../models'
@@ -80,6 +81,37 @@ class CollectionService {
 
     try {
       const doc = await collectionsRef.doc(uuid).get()
+
+      return toCollection(doc.id, doc.data())
+    } catch (err) {
+      console.error(err)
+
+      return null
+    }
+  }
+
+  static async createCollection(
+    input: IFirebaseCreateCollection,
+  ): Promise<Collection | null> {
+    const {
+      db,
+      auth: { currentUser },
+    } = FirebaseService.getInstance()
+
+    if (!currentUser) return null
+
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
+      db.collection('collections')
+    )
+
+    try {
+      const ref = await collectionsRef.add({
+        ...input,
+        owner: currentUser.uid,
+        items: [],
+        updatedAt: firestore.Timestamp.now(),
+      })
+      const doc = await ref.get()
 
       return toCollection(doc.id, doc.data())
     } catch (err) {

@@ -25,6 +25,10 @@ export default function App() {
     }
   }
 
+  function updateCollections(collections: Collection[]) {
+    setContext({ ...context, collections })
+  }
+
   async function init() {
     const { auth } = FirebaseService.getInstance()
     await new Promise(resolve => {
@@ -51,7 +55,9 @@ export default function App() {
   }
 
   return (
-    <AppContext.Provider value={{ ...context, updateCurrentUser }}>
+    <AppContext.Provider
+      value={{ ...context, updateCurrentUser, updateCollections }}
+    >
       <AppNavigator />
     </AppContext.Provider>
   )

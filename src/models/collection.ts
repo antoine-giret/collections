@@ -3,9 +3,9 @@ import MusicItem from './music-item'
 import BookItem from './book-item'
 
 export enum CollectionTypes {
-  MUSIC,
-  BOOK,
-  OTHER,
+  MUSIC = 'MUSIC',
+  BOOK = 'BOOK',
+  OTHER = 'OTHER',
 }
 
 function getIcon(type: CollectionTypes) {

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import LoginScreen from '../screens/login'
 import HomeScreen from '../screens/home'
 import CollectionScreen from '../screens/collection'
+import NewCollectionScreen from '../screens/new-collection'
 import ProfileScreen from '../screens/profile'
 import AccountButton from '../components/account-button'
 
@@ -38,6 +39,15 @@ export default function AppNavigator() {
                 headerBackTitle: t('commons.actions.back'),
                 headerRight: () => <AccountButton navigation={navigation} />,
                 headerTitle: (params as any).title,
+              })}
+            />
+            <Stack.Screen
+              component={NewCollectionScreen}
+              name={Screens.NEW_COLLECTION}
+              options={({ navigation }) => ({
+                headerBackTitle: t('commons.actions.back'),
+                headerRight: () => <AccountButton navigation={navigation} />,
+                headerTitle: t('navigator.new_collection'),
               })}
             />
             <Stack.Screen
