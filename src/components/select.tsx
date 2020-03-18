@@ -22,6 +22,7 @@ function Select({ label, items, value, onValueChange }: IProps) {
       </Text>
       <Picker
         itemStyle={styles.pickerItem}
+        mode="dropdown"
         onValueChange={onValueChange}
         selectedValue={value}
         style={styles.picker}
@@ -45,10 +46,8 @@ const styles = StyleSheet.create({
   },
   picker: {
     backgroundColor: '#212121',
-    borderColor: '#ccc',
-    borderRadius: 8,
-    borderStyle: 'solid',
-    borderWidth: 1,
+    borderRadius: 2,
+    color: '#fff',
     marginVertical: 8,
   },
   pickerItem: {
