@@ -2,7 +2,7 @@ enum Screens {
   LOGIN = 'Login',
   HOME = 'Home',
   COLLECTION = 'Collection',
-  NEW_COLLECTION = 'NewCollection',
+  COLLECTION_FORM = 'CollectionForm',
   PROFILE = 'Profile',
 }
 

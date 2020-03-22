@@ -16,7 +16,7 @@ function CollectionList({ collections }: IProps) {
   const { navigate } = useNavigation()
 
   function handleAddPress() {
-    navigate(Screens.NEW_COLLECTION)
+    navigate(Screens.COLLECTION_FORM)
   }
 
   return (

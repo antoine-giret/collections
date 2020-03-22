@@ -7,18 +7,16 @@ import { Collection } from '../../models'
 
 import CollectionForm from './components/form'
 
-function NewCollectionScreen() {
+function CollectionFormScreen() {
   const { replace } = useNavigation()
   const { collections, updateCollections } = useContext(AppContext)
 
   function handleAdd(collection: Collection) {
-    const { uuid, title } = collection
-
     updateCollections([...collections, collection])
-    replace(Screens.COLLECTION, { uuid, title })
+    replace(Screens.COLLECTION, collection)
   }
 
   return <CollectionForm onAdd={handleAdd} />
 }
 
-export default NewCollectionScreen
+export default CollectionFormScreen
