@@ -3,6 +3,8 @@ import {
   IFirebaseCollection,
   IFirebaseCollectionItem,
   IFirebaseCreateCollection,
+  IFirebaseCreateCollectionItem,
+  IFirebaseUpdateCollectionItem,
   IFirebaseMusicItem,
   IFirebaseUser,
 } from './firebase'
@@ -21,6 +23,8 @@ export {
   IFirebaseCollection,
   IFirebaseCollectionItem,
   IFirebaseCreateCollection,
+  IFirebaseCreateCollectionItem,
+  IFirebaseUpdateCollectionItem,
   IFirebaseMusicItem,
   IFirebaseUser,
   MusicItem,

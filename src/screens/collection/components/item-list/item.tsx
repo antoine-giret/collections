@@ -5,12 +5,15 @@ import { CollectionItem } from '../../../../models'
 
 interface IProps {
   item: CollectionItem
+  onPress: (item: CollectionItem) => void
 }
 
-function Item({ item: { uuid, title, description, imageUrl } }: IProps) {
+function Item({ item, onPress }: IProps) {
   function handlePress() {
-    //
+    onPress(item)
   }
+
+  const { uuid, title, description, imageUrl } = item
 
   return (
     <View key={uuid} style={styles.wrapper}>

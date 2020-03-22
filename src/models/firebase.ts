@@ -6,10 +6,10 @@ export interface IFirebaseUser {
 }
 
 export interface IFirebaseCollectionItem {
-  uuid: string
   title: string
   imageUrl?: string
   createdAt: firestore.Timestamp
+  [key: string]: any
 }
 
 export interface IFirebaseMusicItem extends IFirebaseCollectionItem {
@@ -20,15 +20,35 @@ export interface IFirebaseBookItem extends IFirebaseCollectionItem {
   author: string
 }
 
+type TFirebaseCollectionItem =
+  | IFirebaseCollectionItem
+  | IFirebaseMusicItem
+  | IFirebaseBookItem
+
 export interface IFirebaseCollection {
   owner: string
   title: string
   type: string
-  items?: (IFirebaseCollectionItem | IFirebaseMusicItem | IFirebaseBookItem)[]
+  items?: { [uuid: string]: TFirebaseCollectionItem }
   updatedAt: firestore.Timestamp
 }
 
 export interface IFirebaseCreateCollection {
   title: string
   type: string
+}
+
+export interface IFirebaseCreateCollectionItem {
+  collectionUuid: string
+  title: string
+  imageUrl: string | null
+  [key: string]: any
+}
+
+export interface IFirebaseUpdateCollectionItem {
+  uuid: string
+  collectionUuid: string
+  title?: string
+  imageUrl?: string | null
+  [key: string]: any
 }

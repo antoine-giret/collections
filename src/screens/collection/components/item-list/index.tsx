@@ -7,14 +7,15 @@ import Item from './item'
 
 interface IProps {
   items: CollectionItem[]
+  onItemPress: (item: CollectionItem) => void
 }
 
-function ItemList({ items }: IProps) {
+function ItemList({ items, onItemPress }: IProps) {
   return (
     <ScrollView style={styles.wrapper}>
       <View style={styles.container}>
         {items.map(item => (
-          <Item item={item} key={item.uuid} />
+          <Item item={item} key={item.uuid} onPress={onItemPress} />
         ))}
       </View>
     </ScrollView>

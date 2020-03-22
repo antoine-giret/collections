@@ -1,5 +1,10 @@
 const en = {
   translation: {
+    camera: {
+      errors: {
+        no_access: 'No access to camera',
+      },
+    },
     collection: {
       error: 'Inventory in progress',
       form: {
@@ -26,6 +31,26 @@ const en = {
         other: 'Other',
       },
     },
+    collection_item: {
+      form: {
+        actions: {
+          add: 'Add to collection',
+          update: 'Update item',
+        },
+        creating: 'Adding item',
+        errors: {
+          not_created: 'Unable to add item :(',
+          not_updated: 'Unable to update item :(',
+        },
+        fields: {
+          artist: 'Artist',
+          author: 'Author',
+          photo: 'Photo',
+          title: 'Title',
+        },
+        updating: 'Updating item',
+      },
+    },
     commons: {
       actions: {
         back: 'Back',
@@ -40,6 +65,8 @@ const en = {
     navigator: {
       login: 'Login',
       new_collection: 'New collection',
+      new_item: 'New item',
+      new_item_camera: 'Take a picture of your item',
       home: 'Collections',
     },
     profile: {

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#212121',
-    borderRadius: 2,
+    borderRadius: 4,
     color: '#fff',
     fontSize: 16,
     height: 46,

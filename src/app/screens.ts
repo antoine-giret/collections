@@ -3,6 +3,8 @@ enum Screens {
   HOME = 'Home',
   COLLECTION = 'Collection',
   COLLECTION_FORM = 'CollectionForm',
+  ITEM_FORM = 'ItemForm',
+  CAMERA = 'Camera',
   PROFILE = 'Profile',
 }
 

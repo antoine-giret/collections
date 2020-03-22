@@ -29,6 +29,10 @@ export default function App() {
     setContext({ ...context, collections })
   }
 
+  function setCapturedPictureUrl(capturedPictureUrl: string | null) {
+    setContext({ ...context, capturedPictureUrl })
+  }
+
   async function init() {
     const { auth } = FirebaseService.getInstance()
     await new Promise(resolve => {
@@ -56,7 +60,7 @@ export default function App() {
 
   return (
     <AppContext.Provider
-      value={{ ...context, updateCurrentUser, updateCollections }}
+      value={{ ...context, updateCurrentUser, updateCollections, setCapturedPictureUrl }}
     >
       <AppNavigator />
     </AppContext.Provider>

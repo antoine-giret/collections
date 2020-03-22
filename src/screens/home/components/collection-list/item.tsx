@@ -18,10 +18,10 @@ function CollectionItem({ collection }: IProps) {
   const { t } = useTranslation()
 
   function handlePress() {
-    navigate(Screens.COLLECTION, { uuid, title })
+    navigate(Screens.COLLECTION, collection)
   }
 
-  const { uuid, title, icon, items, updatedAt } = collection
+  const { title, icon, items, updatedAt } = collection
 
   return (
     <View style={styles.wrapper}>

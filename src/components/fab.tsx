@@ -5,20 +5,32 @@ import { Icon } from 'react-native-elements'
 import theme from '../app/theme'
 
 interface IProps {
+  color?: 'primary'
   containerStyle?: ViewStyle
+  disabled?: boolean
   icon: string
   onPress: () => void
 }
 
-function Fab({ containerStyle, icon, onPress }: IProps) {
+function Fab({ containerStyle, disabled, color, icon, onPress }: IProps) {
   return (
     <TouchableOpacity
+      disabled={disabled}
       onPress={onPress}
-      style={[containerStyle, styles.wrapper]}
+      style={[
+        containerStyle,
+        styles.wrapper,
+        {
+          backgroundColor:
+            color === 'primary' ? theme.palette.primary.main : '#fff',
+        },
+      ]}
     >
       <View style={styles.content}>
         <Icon
-          color={theme.palette.primary.contrastText}
+          color={
+            color === 'primary' ? theme.palette.primary.contrastText : '#545454'
+          }
           name={icon}
           type="material"
         />
@@ -33,7 +45,6 @@ const styles = StyleSheet.create({
   },
   content: {
     alignItems: 'center',
-    backgroundColor: theme.palette.primary.main,
     borderRadius: 24,
     justifyContent: 'center',
     height: 48,

@@ -1,30 +1,37 @@
-import React, { useEffect, useState } from 'react'
-import { useRoute } from '@react-navigation/native'
+import React, { useContext, useEffect, useState } from 'react'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { Trans } from 'react-i18next'
 
-import { Collection } from '../../models'
-import { CollectionService } from '../../services'
+import AppContext from '../../app/context'
+import Screens from '../../app/screens'
+import { Collection, CollectionItem } from '../../models'
 import Loader from '../../components/loader'
 import Error from '../../components/error'
+import Fab from '../../components/fab'
 
 import ItemList from './components/item-list'
 
 function CollectionScreen() {
   const [collection, setCollection] = useState<Collection | null | undefined>()
-  const {
-    params: { uuid },
-  } = useRoute<{
+  const { navigate } = useNavigation()
+  const { params } = useRoute<{
     key: string
     name: string
     params: { uuid: string; title: string }
   }>()
+  const { collections } = useContext(AppContext)
 
   useEffect(() => {
-    getCollection()
+    setCollection(collections.find(({ uuid }) => uuid === params.uuid) || null)
   }, [])
 
-  async function getCollection() {
-    setCollection(await CollectionService.getCollection(uuid))
+  function handleAddPress() {
+    navigate(Screens.ITEM_FORM, { collection })
+  }
+
+  function handleItemPress(item: CollectionItem) {
+    navigate(Screens.ITEM_FORM, { collection, item })
   }
 
   if (collection === undefined) {
@@ -47,7 +54,34 @@ function CollectionScreen() {
     )
   }
 
-  return <ItemList items={collection.items} />
+  return (
+    <SafeAreaView style={styles.wrapper}>
+      <View style={styles.container}>
+        <ItemList items={collection.items} onItemPress={handleItemPress} />
+      </View>
+      <Fab
+        color="primary"
+        containerStyle={styles.fab}
+        icon="add"
+        onPress={handleAddPress}
+      />
+    </SafeAreaView>
+  )
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    position: 'relative',
+  },
+  fab: {
+    bottom: 16,
+    position: 'absolute',
+    right: 16,
+  },
+})
 
 export default CollectionScreen

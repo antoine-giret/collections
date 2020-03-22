@@ -1,4 +1,5 @@
 import { firestore } from 'firebase'
+import { generate } from 'shortid'
 
 import {
   BookItem,
@@ -9,6 +10,8 @@ import {
   IFirebaseCollection,
   IFirebaseCollectionItem,
   IFirebaseCreateCollection,
+  IFirebaseCreateCollectionItem,
+  IFirebaseUpdateCollectionItem,
   IFirebaseMusicItem,
   MusicItem,
 } from '../models'
@@ -16,10 +19,11 @@ import {
 import FirebaseService from './firebase'
 
 function toCollectionItem(
+  uuid: string,
   type: CollectionTypes,
-  item: IFirebaseCollectionItem | IFirebaseMusicItem | IFirebaseBookItem,
+  item: IFirebaseCollectionItem,
 ) {
-  const { uuid, title, imageUrl, createdAt } = item
+  const { title, imageUrl, createdAt } = item
 
   if (type === CollectionTypes.MUSIC) {
     const { artist } = item as IFirebaseMusicItem
@@ -44,11 +48,15 @@ function toCollection(
   if (_type === 'MUSIC') type = CollectionTypes.MUSIC
   else if (_type === 'BOOK') type = CollectionTypes.BOOK
 
+  const items = _items || {}
+
   return new Collection(
     uuid,
     title,
     type,
-    (_items || []).map(item => toCollectionItem(type, item)),
+    Object.keys(items).map(itemUuid =>
+      toCollectionItem(itemUuid, type, items[itemUuid]),
+    ),
     updatedAt.toDate(),
   )
 }
@@ -65,24 +73,6 @@ class CollectionService {
       const snapshot = await collectionsRef.where('owner', '==', userUuid).get()
 
       return snapshot.docs.map(doc => toCollection(doc.id, doc.data()))
-    } catch (err) {
-      console.error(err)
-
-      return null
-    }
-  }
-
-  static async getCollection(uuid: string): Promise<Collection | null> {
-    const { db } = FirebaseService.getInstance()
-
-    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
-      db.collection('collections')
-    )
-
-    try {
-      const doc = await collectionsRef.doc(uuid).get()
-
-      return toCollection(doc.id, doc.data())
     } catch (err) {
       console.error(err)
 
@@ -108,7 +98,7 @@ class CollectionService {
       const ref = await collectionsRef.add({
         ...input,
         owner: currentUser.uid,
-        items: [],
+        items: {},
         updatedAt: firestore.Timestamp.now(),
       })
       const doc = await ref.get()
@@ -119,6 +109,120 @@ class CollectionService {
 
       return null
     }
+  }
+
+  static async addItemToCollection(
+    input: IFirebaseCreateCollectionItem,
+  ): Promise<Collection> {
+    const { db } = FirebaseService.getInstance()
+    const { collectionUuid, imageUrl: capturedImageUrl, ...inputRest } = input
+    const uuid = generate()
+    const now = new Date()
+
+    const imageUrl = capturedImageUrl
+      ? await this.uploadCollectionItemImage(
+          collectionUuid,
+          uuid,
+          capturedImageUrl,
+        )
+      : null
+
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
+      db.collection('collections')
+    )
+
+    try {
+      const ref = await collectionsRef.doc(collectionUuid)
+
+      ref.update({
+        updatedAt: now,
+        [`items.${uuid}`]: {
+          uuid,
+          imageUrl,
+          createdAt: now,
+          ...inputRest,
+        },
+      })
+
+      const doc = await ref.get()
+
+      return toCollection(doc.id, doc.data())
+    } catch (err) {
+      console.error(err)
+
+      return null
+    }
+  }
+
+  static async updateCollectionItem(
+    input: IFirebaseUpdateCollectionItem,
+  ): Promise<Collection> {
+    const { db } = FirebaseService.getInstance()
+    const {
+      uuid,
+      collectionUuid,
+      imageUrl: capturedImageUrl,
+      ...inputRest
+    } = input
+    const now = new Date()
+
+    const imageUrl = capturedImageUrl
+      ? await this.uploadCollectionItemImage(
+          collectionUuid,
+          uuid,
+          capturedImageUrl,
+        )
+      : undefined
+
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
+      db.collection('collections')
+    )
+
+    try {
+      const ref = await collectionsRef.doc(collectionUuid)
+
+      const currentDoc = await ref.get()
+      const { items } = currentDoc.data()
+      const prevData = items[uuid]
+
+      if (!prevData) throw Error('Item not found')
+
+      ref.update({
+        updatedAt: now,
+        [`items.${uuid}`]: {
+          ...prevData,
+          imageUrl: imageUrl || prevData.imageUrl,
+          ...inputRest,
+        },
+      })
+
+      const doc = await ref.get()
+
+      return toCollection(doc.id, doc.data())
+    } catch (err) {
+      console.error(err)
+
+      return null
+    }
+  }
+
+  static async uploadCollectionItemImage(
+    collectionUuid: string,
+    itemUuid: string,
+    imageUrl: string,
+  ) {
+    const { storage } = FirebaseService.getInstance()
+
+    const storageRef = storage.ref()
+    const pictureRef = storageRef.child(
+      `collections/${collectionUuid}/${itemUuid}.${imageUrl.substr(
+        imageUrl.lastIndexOf('.') + 1,
+      )}`,
+    )
+    const blob = await (await fetch(imageUrl)).blob()
+    const snapshot = await pictureRef.put(blob)
+
+    return snapshot.ref.getDownloadURL()
   }
 }
 

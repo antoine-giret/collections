@@ -70,8 +70,8 @@ function CollectionForm({ onAdd }: IProps) {
       <ScrollView ref={contentRef} style={styles.content}>
         {errors[FormErrors.NOT_CREATED] && (
           <Text style={styles.error}>
-            <Trans id="collection.form.errors.not_created">
-              Unable to start collection
+            <Trans i18nKey="collection.form.errors.not_created">
+              Unable to start collection :(
             </Trans>
           </Text>
         )}

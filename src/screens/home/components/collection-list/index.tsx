@@ -27,7 +27,12 @@ function CollectionList({ collections }: IProps) {
             <CollectionItem collection={collection} key={collection.uuid} />
           ))}
         </ScrollView>
-        <Fab containerStyle={styles.fab} icon="add" onPress={handleAddPress} />
+        <Fab
+          color="primary"
+          containerStyle={styles.fab}
+          icon="add"
+          onPress={handleAddPress}
+        />
       </View>
     </SafeAreaView>
   )
