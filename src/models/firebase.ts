@@ -30,6 +30,7 @@ export interface IFirebaseCollection {
   title: string
   type: string
   items?: { [uuid: string]: TFirebaseCollectionItem }
+  createdAt: firestore.Timestamp
   updatedAt: firestore.Timestamp
 }
 

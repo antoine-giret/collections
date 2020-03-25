@@ -23,6 +23,7 @@ class Collection {
     public readonly title: string,
     public readonly type: CollectionTypes,
     public readonly items: (CollectionItem | MusicItem | BookItem)[],
+    public readonly createdAt: Date,
     public readonly updatedAt: Date,
   ) {
     this.icon = getIcon(type)

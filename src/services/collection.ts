@@ -42,7 +42,13 @@ function toCollectionItem(
 
 function toCollection(
   uuid: string,
-  { title, type: _type, items: _items, updatedAt }: IFirebaseCollection,
+  {
+    title,
+    type: _type,
+    items: _items,
+    createdAt,
+    updatedAt,
+  }: IFirebaseCollection,
 ) {
   let type = CollectionTypes.OTHER
   if (_type === 'MUSIC') type = CollectionTypes.MUSIC
@@ -57,6 +63,7 @@ function toCollection(
     Object.keys(items).map(itemUuid =>
       toCollectionItem(itemUuid, type, items[itemUuid]),
     ),
+    createdAt.toDate(),
     updatedAt.toDate(),
   )
 }
@@ -99,6 +106,7 @@ class CollectionService {
         ...input,
         owner: currentUser.uid,
         items: {},
+        createdAt: firestore.Timestamp.now(),
         updatedAt: firestore.Timestamp.now(),
       })
       const doc = await ref.get()
@@ -119,13 +127,14 @@ class CollectionService {
     const uuid = generate()
     const now = new Date()
 
-    const imageUrl = capturedImageUrl
-      ? await this.uploadCollectionItemImage(
-          collectionUuid,
-          uuid,
-          capturedImageUrl,
-        )
-      : null
+    let imageUrl: string | null = null
+    if (capturedImageUrl) {
+      imageUrl = await this.uploadCollectionItemImage(
+        collectionUuid,
+        uuid,
+        capturedImageUrl,
+      )
+    }
 
     const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
       db.collection('collections')
@@ -166,13 +175,14 @@ class CollectionService {
     } = input
     const now = new Date()
 
-    const imageUrl = capturedImageUrl
-      ? await this.uploadCollectionItemImage(
-          collectionUuid,
-          uuid,
-          capturedImageUrl,
-        )
-      : undefined
+    let imageUrl: string | null = null
+    if (capturedImageUrl) {
+      imageUrl = await this.uploadCollectionItemImage(
+        collectionUuid,
+        uuid,
+        capturedImageUrl,
+      )
+    }
 
     const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
       db.collection('collections')
