@@ -1,7 +1,7 @@
 interface ITheme {
   palette: {
     primary: {
-      main: string,
+      main: string
       contrastText: string
     }
   }

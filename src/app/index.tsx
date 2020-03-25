@@ -60,7 +60,12 @@ export default function App() {
 
   return (
     <AppContext.Provider
-      value={{ ...context, updateCurrentUser, updateCollections, setCapturedPictureUrl }}
+      value={{
+        ...context,
+        updateCurrentUser,
+        updateCollections,
+        setCapturedPictureUrl,
+      }}
     >
       <AppNavigator />
     </AppContext.Provider>

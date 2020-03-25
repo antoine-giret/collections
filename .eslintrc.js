@@ -34,6 +34,7 @@ module.exports = {
     ],
     'comma-dangle': ['error', 'always-multiline'],
     'react/jsx-sort-props': ['error', { shorthandFirst: true }],
-    'react-hooks/exhaustive-deps': 'off'
+    'react-hooks/exhaustive-deps': 'off',
+    'no-console': 'warn',
   },
 }

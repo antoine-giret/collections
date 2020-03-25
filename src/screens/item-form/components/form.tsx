@@ -107,18 +107,22 @@ function ItemForm({
 
     setSubmitting(true)
 
-    const collectionUpdated = item
-      ? await CollectionService.updateCollectionItem({
-          uuid: item.uuid,
-          collectionUuid,
-          imageUrl: capturedPictureUrl,
-          ...values,
-        })
-      : await CollectionService.addItemToCollection({
-          collectionUuid,
-          imageUrl: capturedPictureUrl || null,
-          ...values,
-        })
+    let collectionUpdated: Collection
+
+    if (item) {
+      collectionUpdated = await CollectionService.updateCollectionItem({
+        uuid: item.uuid,
+        collectionUuid,
+        imageUrl: capturedPictureUrl,
+        ...values,
+      })
+    } else {
+      collectionUpdated = await CollectionService.addItemToCollection({
+        collectionUuid,
+        imageUrl: capturedPictureUrl || null,
+        ...values,
+      })
+    }
 
     if (collectionUpdated) {
       onAdd(collectionUpdated)
