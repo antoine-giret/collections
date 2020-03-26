@@ -125,6 +125,29 @@ class CollectionService {
     }
   }
 
+  static async removeCollection(uuid: string): Promise<boolean> {
+    const {
+      db,
+      auth: { currentUser },
+    } = FirebaseService.getInstance()
+
+    if (!currentUser) return null
+
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>db.collection('collections')
+
+    try {
+      const ref = await collectionsRef.doc(uuid)
+
+      ref.delete()
+
+      return true
+    } catch (err) {
+      console.error(err)
+
+      return false
+    }
+  }
+
   static async addItemToCollection(input: IFirebaseCreateCollectionItem): Promise<Collection> {
     const { db } = FirebaseService.getInstance()
     const { collectionUuid, imageUrl: capturedImageUrl, ...inputRest } = input

@@ -2,12 +2,12 @@ import React, { useContext } from 'react'
 import { DarkTheme, NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useTranslation } from 'react-i18next'
-import { Icon } from 'react-native-elements'
 
 import { Collection, CollectionItem } from '../models'
 import LoginScreen from '../screens/login'
 import HomeScreen from '../screens/home'
 import CollectionScreen from '../screens/collection'
+import CollectionHeaderActions from '../screens/collection/components/header-actions'
 import CollectionFormScreen from '../screens/collection-form'
 import ItemFormScreen from '../screens/item-form'
 import CameraScreen from '../screens/camera'
@@ -51,19 +51,7 @@ export default function AppNavigator() {
                 return {
                   ...headerProps(),
                   headerTitle: collection.title,
-                  headerRight: () => (
-                    <Icon
-                      color="#fff"
-                      containerStyle={{ marginHorizontal: 16 }}
-                      name="edit"
-                      onPress={() =>
-                        navigation.navigate(Screens.COLLECTION_FORM, {
-                          collection,
-                        })
-                      }
-                      type="material"
-                    />
-                  ),
+                  headerRight: () => <CollectionHeaderActions collection={collection} navigation={navigation} />,
                 }
               }}
             />

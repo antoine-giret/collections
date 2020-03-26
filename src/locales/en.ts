@@ -28,6 +28,9 @@ const en = {
         loading: 'Inventory of your collections',
       },
       loading: 'Inventory of your collection',
+      remove_alert: {
+        title: 'Remove collection ?',
+      },
       types: {
         book: 'Book',
         music: 'Music',
@@ -58,6 +61,9 @@ const en = {
     commons: {
       actions: {
         back: 'Back',
+        cancel: 'Cancel',
+        edit: 'Edit',
+        remove: 'Remove',
       },
     },
     login: {
