@@ -9,12 +9,7 @@ interface IProps {
 function Error({ text }: IProps) {
   return (
     <View style={styles.wrapper}>
-      <Icon
-        color="#555"
-        name="sentiment-very-dissatisfied"
-        size={72}
-        type="material"
-      />
+      <Icon color="#555" name="sentiment-very-dissatisfied" size={72} type="material" />
       <Text style={styles.text}>{text}</Text>
     </View>
   )

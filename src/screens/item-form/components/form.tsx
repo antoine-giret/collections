@@ -1,25 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Button, Icon } from 'react-native-elements'
 import { Trans, useTranslation } from 'react-i18next'
 
 import AppContext from '../../../app/context'
 import { CollectionService } from '../../../services'
-import {
-  BookItem,
-  Collection,
-  CollectionItem,
-  CollectionTypes,
-  MusicItem,
-} from '../../../models'
+import { BookItem, Collection, CollectionItem, CollectionTypes, MusicItem } from '../../../models'
 import TextField from '../../../components/text-field'
 import Loader from '../../../components/loader'
 
@@ -127,14 +113,9 @@ function ItemForm({
     if (collectionUpdated) {
       onSubmit(collectionUpdated)
     } else {
-      setErrors(
-        item
-          ? { [FormErrors.NOT_CREATED]: true }
-          : { [FormErrors.NOT_CREATED]: true },
-      )
+      setErrors(item ? { [FormErrors.NOT_CREATED]: true } : { [FormErrors.NOT_CREATED]: true })
       setSubmitting(false)
-      if (contentRef.current)
-        contentRef.current.scrollTo({ x: 0, y: 0, animated: true })
+      if (contentRef.current) contentRef.current.scrollTo({ x: 0, y: 0, animated: true })
     }
   }
 
@@ -157,32 +138,24 @@ function ItemForm({
       <ScrollView ref={contentRef} style={styles.content}>
         {errors[FormErrors.NOT_CREATED] && (
           <Text style={styles.error}>
-            <Trans i18nKey="collection_item.form.errors.not_created">
-              Unable to add item
-            </Trans>
+            <Trans i18nKey="collection_item.form.errors.not_created">Unable to add item</Trans>
           </Text>
         )}
         {errors[FormErrors.NOT_UPDATED] && (
           <Text style={styles.error}>
-            <Trans i18nKey="collection_item.form.errors.not_updated">
-              Unable to update item
-            </Trans>
+            <Trans i18nKey="collection_item.form.errors.not_updated">Unable to update item</Trans>
           </Text>
         )}
         <TextField
           error={errors[FormErrors.TITLE]}
-          label={
-            <Trans i18nKey="collection_item.form.fields.title">Title</Trans>
-          }
+          label={<Trans i18nKey="collection_item.form.fields.title">Title</Trans>}
           onChangeText={handleChange('title')}
           value={values.title}
         />
         {collectionType === CollectionTypes.MUSIC && (
           <TextField
             error={errors[FormErrors.ARTIST]}
-            label={
-              <Trans i18nKey="collection_item.form.fields.artist">Artist</Trans>
-            }
+            label={<Trans i18nKey="collection_item.form.fields.artist">Artist</Trans>}
             onChangeText={handleChange('artist')}
             value={values.artist}
           />
@@ -190,9 +163,7 @@ function ItemForm({
         {collectionType === CollectionTypes.BOOK && (
           <TextField
             error={errors[FormErrors.AUTHOR]}
-            label={
-              <Trans i18nKey="collection_item.form.fields.author">Author</Trans>
-            }
+            label={<Trans i18nKey="collection_item.form.fields.author">Author</Trans>}
             onChangeText={handleChange('author')}
             value={values.author}
           />
@@ -201,10 +172,7 @@ function ItemForm({
           <Text style={styles.label}>
             <Trans i18nKey="collection_item.form.fields.photo">Photo</Trans>
           </Text>
-          <TouchableOpacity
-            onPress={onCameraShowed}
-            style={styles.newImageButton}
-          >
+          <TouchableOpacity onPress={onCameraShowed} style={styles.newImageButton}>
             {capturedPictureUrl || item ? (
               <Image
                 resizeMode="cover"
@@ -220,11 +188,7 @@ function ItemForm({
       <View style={styles.actions}>
         <Button
           onPress={handleSubmit}
-          title={t(
-            item
-              ? 'collection_item.form.actions.update'
-              : 'collection_item.form.actions.add',
-          ).toUpperCase()}
+          title={t(item ? 'collection_item.form.actions.update' : 'collection_item.form.actions.add').toUpperCase()}
         />
       </View>
     </SafeAreaView>

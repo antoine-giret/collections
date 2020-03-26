@@ -20,10 +20,7 @@ export interface IFirebaseBookItem extends IFirebaseCollectionItem {
   author: string
 }
 
-type TFirebaseCollectionItem =
-  | IFirebaseCollectionItem
-  | IFirebaseMusicItem
-  | IFirebaseBookItem
+type TFirebaseCollectionItem = IFirebaseCollectionItem | IFirebaseMusicItem | IFirebaseBookItem
 
 export interface IFirebaseCollection {
   owner: string

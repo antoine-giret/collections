@@ -77,9 +77,7 @@ export default function AppNavigator() {
 
                 return {
                   ...headerProps(),
-                  headerTitle: collection
-                    ? collection.title
-                    : t('navigator.new_collection'),
+                  headerTitle: collection ? collection.title : t('navigator.new_collection'),
                 }
               }}
             />
@@ -113,11 +111,7 @@ export default function AppNavigator() {
             />
           </>
         ) : (
-          <Stack.Screen
-            component={LoginScreen}
-            name={Screens.LOGIN}
-            options={{ headerTitle: t('navigator.login') }}
-          />
+          <Stack.Screen component={LoginScreen} name={Screens.LOGIN} options={{ headerTitle: t('navigator.login') }} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

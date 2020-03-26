@@ -23,9 +23,7 @@ function CollectionScreen() {
   const { collections } = useContext(AppContext)
 
   useEffect(() => {
-    setCollection(
-      collections.find(({ uuid }) => uuid === params.collection.uuid) || null,
-    )
+    setCollection(collections.find(({ uuid }) => uuid === params.collection.uuid) || null)
   }, [])
 
   function handleAddPress() {
@@ -37,23 +35,11 @@ function CollectionScreen() {
   }
 
   if (collection === undefined) {
-    return (
-      <Loader
-        text={
-          <Trans i18nKey="collection.loading">
-            Inventory of your collection
-          </Trans>
-        }
-      />
-    )
+    return <Loader text={<Trans i18nKey="collection.loading">Inventory of your collection</Trans>} />
   }
 
   if (collection === null) {
-    return (
-      <Error
-        text={<Trans i18nKey="collection.error">Inventory in progress</Trans>}
-      />
-    )
+    return <Error text={<Trans i18nKey="collection.error">Inventory in progress</Trans>} />
   }
 
   return (
@@ -61,12 +47,7 @@ function CollectionScreen() {
       <View style={styles.container}>
         <ItemList items={collection.items} onItemPress={handleItemPress} />
       </View>
-      <Fab
-        color="primary"
-        containerStyle={styles.fab}
-        icon="add"
-        onPress={handleAddPress}
-      />
+      <Fab color="primary" containerStyle={styles.fab} icon="add" onPress={handleAddPress} />
     </SafeAreaView>
   )
 }

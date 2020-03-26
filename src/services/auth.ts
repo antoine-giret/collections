@@ -1,7 +1,4 @@
-import {
-  GOOGLE_ANDROID_CLIENT_ID,
-  GOOGLE_IOS_CLIENT_ID,
-} from 'react-native-dotenv'
+import { GOOGLE_ANDROID_CLIENT_ID, GOOGLE_IOS_CLIENT_ID } from 'react-native-dotenv'
 import * as Google from 'expo-google-app-auth'
 import { auth as firebaseAuth } from 'firebase'
 
@@ -27,9 +24,7 @@ class AuthService {
       const { idToken, accessToken } = res
 
       await auth.setPersistence(firebaseAuth.Auth.Persistence.LOCAL)
-      await auth.signInWithCredential(
-        firebaseAuth.GoogleAuthProvider.credential(idToken, accessToken),
-      )
+      await auth.signInWithCredential(firebaseAuth.GoogleAuthProvider.credential(idToken, accessToken))
 
       return await UserService.getInstance().getCurrentUser()
     } catch (err) {

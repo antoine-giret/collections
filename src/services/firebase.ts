@@ -8,13 +8,7 @@ import {
   FIREBASE_PROJECT_ID,
   FIREBASE_STORAGE_BUCKET,
 } from 'react-native-dotenv'
-import {
-  app as firebaseApp,
-  auth,
-  firestore,
-  initializeApp,
-  storage,
-} from 'firebase/app'
+import { app as firebaseApp, auth, firestore, initializeApp, storage } from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'

@@ -17,10 +17,7 @@ function TextField({ error, label, value, onChangeText }: IProps) {
 
   return (
     <View style={styles.wrapper}>
-      <Text
-        onPress={handleLabelPress}
-        style={[styles.label, { color: error ? '#f44336' : '#ccc' }]}
-      >
+      <Text onPress={handleLabelPress} style={[styles.label, { color: error ? '#f44336' : '#ccc' }]}>
         {label}
       </Text>
       <TextInput

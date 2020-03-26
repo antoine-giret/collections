@@ -1,13 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import {
-  ImageBackground,
-  InteractionManager,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { ImageBackground, InteractionManager, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { Camera } from 'expo-camera'
 import { CapturedPicture } from 'expo-camera/build/Camera.types'
 import { Trans } from 'react-i18next'
@@ -71,17 +64,9 @@ function CameraScreen() {
   if (picture) {
     return (
       <SafeAreaView style={styles.wrapper}>
-        <ImageBackground
-          resizeMode="contain"
-          source={picture}
-          style={styles.preview}
-        >
+        <ImageBackground resizeMode="contain" source={picture} style={styles.preview}>
           <View style={styles.actions}>
-            <Fab
-              containerStyle={{ marginRight: 16 }}
-              icon="clear"
-              onPress={handleClear}
-            />
+            <Fab containerStyle={{ marginRight: 16 }} icon="clear" onPress={handleClear} />
             <Fab icon="check" onPress={handleValidate} />
           </View>
         </ImageBackground>

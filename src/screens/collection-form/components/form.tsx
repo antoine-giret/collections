@@ -76,14 +76,9 @@ function CollectionForm({ collection, onSubmit }: IProps) {
     if (collectionSubmitted) {
       onSubmit(collectionSubmitted)
     } else {
-      setErrors(
-        collection
-          ? { [FormErrors.NOT_UPDATED]: true }
-          : { [FormErrors.NOT_CREATED]: true },
-      )
+      setErrors(collection ? { [FormErrors.NOT_UPDATED]: true } : { [FormErrors.NOT_CREATED]: true })
       setSubmitting(false)
-      if (contentRef.current)
-        contentRef.current.scrollTo({ x: 0, y: 0, animated: true })
+      if (contentRef.current) contentRef.current.scrollTo({ x: 0, y: 0, animated: true })
     }
   }
 
@@ -92,13 +87,9 @@ function CollectionForm({ collection, onSubmit }: IProps) {
       <Loader
         text={
           collection ? (
-            <Trans i18nKey="collection.form.updating">
-              Updating collection
-            </Trans>
+            <Trans i18nKey="collection.form.updating">Updating collection</Trans>
           ) : (
-            <Trans i18nKey="collection.form.creating">
-              Starting collection
-            </Trans>
+            <Trans i18nKey="collection.form.creating">Starting collection</Trans>
           )
         }
       />
@@ -110,16 +101,12 @@ function CollectionForm({ collection, onSubmit }: IProps) {
       <ScrollView ref={contentRef} style={styles.content}>
         {errors[FormErrors.NOT_CREATED] && (
           <Text style={styles.error}>
-            <Trans i18nKey="collection.form.errors.not_created">
-              Unable to start collection
-            </Trans>
+            <Trans i18nKey="collection.form.errors.not_created">Unable to start collection</Trans>
           </Text>
         )}
         {errors[FormErrors.NOT_UPDATED] && (
           <Text style={styles.error}>
-            <Trans i18nKey="collection.form.errors.not_updated">
-              Unable to update collection
-            </Trans>
+            <Trans i18nKey="collection.form.errors.not_updated">Unable to update collection</Trans>
           </Text>
         )}
         <TextField
@@ -130,11 +117,7 @@ function CollectionForm({ collection, onSubmit }: IProps) {
         />
         {!collection && (
           <Select
-            items={[
-              CollectionTypes.MUSIC,
-              CollectionTypes.BOOK,
-              CollectionTypes.OTHER,
-            ].map(key => ({
+            items={[CollectionTypes.MUSIC, CollectionTypes.BOOK, CollectionTypes.OTHER].map(key => ({
               key,
               label: t(`collection.types.${key.toLowerCase()}`),
             }))}
@@ -147,11 +130,7 @@ function CollectionForm({ collection, onSubmit }: IProps) {
       <View style={styles.actions}>
         <Button
           onPress={handleSubmit}
-          title={t(
-            collection
-              ? 'collection.form.actions.update'
-              : 'collection.form.actions.add',
-          ).toUpperCase()}
+          title={t(collection ? 'collection.form.actions.update' : 'collection.form.actions.add').toUpperCase()}
         />
       </View>
     </SafeAreaView>

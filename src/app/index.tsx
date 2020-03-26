@@ -41,21 +41,13 @@ export default function App() {
 
     const user = await UserService.getInstance().getCurrentUser()
 
-    const collections = user
-      ? await CollectionService.getCollections(user.uuid)
-      : undefined
+    const collections = user ? await CollectionService.getCollections(user.uuid) : undefined
 
     setContext({ ...context, user, collections })
   }
 
   if (!isReady) {
-    return (
-      <AppLoading
-        onError={console.warn}
-        onFinish={() => setReady(true)}
-        startAsync={init}
-      />
-    )
+    return <AppLoading onError={console.warn} onFinish={() => setReady(true)} startAsync={init} />
   }
 
   return (

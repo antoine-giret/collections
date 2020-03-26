@@ -12,6 +12,7 @@ module.exports = {
   ],
   plugins: ['unicorn'],
   rules: {
+    'max-len': ['error', { code: 120 }],
     'unicorn/filename-case': [
       'error',
       {

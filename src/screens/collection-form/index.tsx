@@ -20,9 +20,7 @@ function CollectionFormScreen() {
 
   function handleSubmit(collectionSubmitted: Collection) {
     if (collection) {
-      const index = collections.findIndex(
-        ({ uuid }) => uuid === collectionSubmitted.uuid,
-      )
+      const index = collections.findIndex(({ uuid }) => uuid === collectionSubmitted.uuid)
       const collectionsUpdated = [...collections]
       collectionsUpdated.splice(index, 1, collectionSubmitted)
 

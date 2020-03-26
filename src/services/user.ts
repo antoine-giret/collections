@@ -32,9 +32,7 @@ class UserService {
       return null
     }
 
-    const usersRef = <firestore.CollectionReference<IFirebaseUser>>(
-      db.collection('users')
-    )
+    const usersRef = <firestore.CollectionReference<IFirebaseUser>>db.collection('users')
 
     try {
       const doc = await usersRef.doc(currentUser.uid).get()

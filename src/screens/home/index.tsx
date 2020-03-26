@@ -11,25 +11,11 @@ function HomeScreen() {
   const { collections } = useContext(AppContext)
 
   if (collections === undefined) {
-    return (
-      <Loader
-        text={
-          <Trans i18nKey="collection.list.loading">
-            Inventory of your collections
-          </Trans>
-        }
-      />
-    )
+    return <Loader text={<Trans i18nKey="collection.list.loading">Inventory of your collections</Trans>} />
   }
 
   if (collections === null) {
-    return (
-      <Error
-        text={
-          <Trans i18nKey="collection.list.error">Inventory in progress</Trans>
-        }
-      />
-    )
+    return <Error text={<Trans i18nKey="collection.list.error">Inventory in progress</Trans>} />
   }
 
   return <CollectionList collections={collections} />

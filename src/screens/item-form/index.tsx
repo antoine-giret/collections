@@ -23,9 +23,7 @@ function ItemFormScreen() {
   }
 
   function handleSubmit(collectionUpdated: Collection) {
-    const index = collections.findIndex(
-      ({ uuid }) => uuid === collectionUpdated.uuid,
-    )
+    const index = collections.findIndex(({ uuid }) => uuid === collectionUpdated.uuid)
     const collectionsUpdated = [...collections]
     collectionsUpdated.splice(index, 1, collectionUpdated)
 
@@ -33,14 +31,7 @@ function ItemFormScreen() {
     replace(Screens.COLLECTION, { collection: collectionUpdated })
   }
 
-  return (
-    <ItemForm
-      collection={collection}
-      item={item}
-      onCameraShowed={handleCameraShowed}
-      onSubmit={handleSubmit}
-    />
-  )
+  return <ItemForm collection={collection} item={item} onCameraShowed={handleCameraShowed} onSubmit={handleSubmit} />
 }
 
 export default ItemFormScreen

@@ -21,16 +21,13 @@ function Fab({ containerStyle, disabled, color, icon, onPress }: IProps) {
         containerStyle,
         styles.wrapper,
         {
-          backgroundColor:
-            color === 'primary' ? theme.palette.primary.main : '#fff',
+          backgroundColor: color === 'primary' ? theme.palette.primary.main : '#fff',
         },
       ]}
     >
       <View style={styles.content}>
         <Icon
-          color={
-            color === 'primary' ? theme.palette.primary.contrastText : '#545454'
-          }
+          color={color === 'primary' ? theme.palette.primary.contrastText : '#545454'}
           name={icon}
           type="material"
         />

@@ -19,11 +19,7 @@ import {
 
 import FirebaseService from './firebase'
 
-function toCollectionItem(
-  uuid: string,
-  type: CollectionTypes,
-  item: IFirebaseCollectionItem,
-) {
+function toCollectionItem(uuid: string, type: CollectionTypes, item: IFirebaseCollectionItem) {
   const { title, imageUrl, createdAt } = item
 
   if (type === CollectionTypes.MUSIC) {
@@ -41,16 +37,7 @@ function toCollectionItem(
   return new CollectionItem(uuid, title, imageUrl, createdAt.toDate())
 }
 
-function toCollection(
-  uuid: string,
-  {
-    title,
-    type: _type,
-    items: _items,
-    createdAt,
-    updatedAt,
-  }: IFirebaseCollection,
-) {
+function toCollection(uuid: string, { title, type: _type, items: _items, createdAt, updatedAt }: IFirebaseCollection) {
   let type = CollectionTypes.OTHER
   if (_type === 'MUSIC') type = CollectionTypes.MUSIC
   else if (_type === 'BOOK') type = CollectionTypes.BOOK
@@ -61,9 +48,7 @@ function toCollection(
     uuid,
     title,
     type,
-    Object.keys(items).map(itemUuid =>
-      toCollectionItem(itemUuid, type, items[itemUuid]),
-    ),
+    Object.keys(items).map(itemUuid => toCollectionItem(itemUuid, type, items[itemUuid])),
     createdAt.toDate(),
     updatedAt.toDate(),
   )
@@ -73,9 +58,7 @@ class CollectionService {
   static async getCollections(userUuid: string): Promise<Collection[] | null> {
     const { db } = FirebaseService.getInstance()
 
-    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
-      db.collection('collections')
-    )
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>db.collection('collections')
 
     try {
       const snapshot = await collectionsRef.where('owner', '==', userUuid).get()
@@ -88,9 +71,7 @@ class CollectionService {
     }
   }
 
-  static async createCollection(
-    input: IFirebaseCreateCollection,
-  ): Promise<Collection | null> {
+  static async createCollection(input: IFirebaseCreateCollection): Promise<Collection | null> {
     const {
       db,
       auth: { currentUser },
@@ -98,9 +79,7 @@ class CollectionService {
 
     if (!currentUser) return null
 
-    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
-      db.collection('collections')
-    )
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>db.collection('collections')
 
     try {
       const ref = await collectionsRef.add({
@@ -120,9 +99,7 @@ class CollectionService {
     }
   }
 
-  static async updateCollection(
-    input: IFirebaseUpdateCollection,
-  ): Promise<Collection | null> {
+  static async updateCollection(input: IFirebaseUpdateCollection): Promise<Collection | null> {
     const {
       db,
       auth: { currentUser },
@@ -131,9 +108,7 @@ class CollectionService {
 
     if (!currentUser) return null
 
-    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
-      db.collection('collections')
-    )
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>db.collection('collections')
 
     try {
       const ref = await collectionsRef.doc(uuid)
@@ -150,9 +125,7 @@ class CollectionService {
     }
   }
 
-  static async addItemToCollection(
-    input: IFirebaseCreateCollectionItem,
-  ): Promise<Collection> {
+  static async addItemToCollection(input: IFirebaseCreateCollectionItem): Promise<Collection> {
     const { db } = FirebaseService.getInstance()
     const { collectionUuid, imageUrl: capturedImageUrl, ...inputRest } = input
     const uuid = generate()
@@ -160,16 +133,10 @@ class CollectionService {
 
     let imageUrl: string | null = null
     if (capturedImageUrl) {
-      imageUrl = await this.uploadCollectionItemImage(
-        collectionUuid,
-        uuid,
-        capturedImageUrl,
-      )
+      imageUrl = await this.uploadCollectionItemImage(collectionUuid, uuid, capturedImageUrl)
     }
 
-    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
-      db.collection('collections')
-    )
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>db.collection('collections')
 
     try {
       const ref = await collectionsRef.doc(collectionUuid)
@@ -194,30 +161,17 @@ class CollectionService {
     }
   }
 
-  static async updateCollectionItem(
-    input: IFirebaseUpdateCollectionItem,
-  ): Promise<Collection> {
+  static async updateCollectionItem(input: IFirebaseUpdateCollectionItem): Promise<Collection> {
     const { db } = FirebaseService.getInstance()
-    const {
-      uuid,
-      collectionUuid,
-      imageUrl: capturedImageUrl,
-      ...inputRest
-    } = input
+    const { uuid, collectionUuid, imageUrl: capturedImageUrl, ...inputRest } = input
     const now = new Date()
 
     let imageUrl: string | null = null
     if (capturedImageUrl) {
-      imageUrl = await this.uploadCollectionItemImage(
-        collectionUuid,
-        uuid,
-        capturedImageUrl,
-      )
+      imageUrl = await this.uploadCollectionItemImage(collectionUuid, uuid, capturedImageUrl)
     }
 
-    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
-      db.collection('collections')
-    )
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>db.collection('collections')
 
     try {
       const ref = await collectionsRef.doc(collectionUuid)
@@ -247,18 +201,12 @@ class CollectionService {
     }
   }
 
-  static async uploadCollectionItemImage(
-    collectionUuid: string,
-    itemUuid: string,
-    imageUrl: string,
-  ) {
+  static async uploadCollectionItemImage(collectionUuid: string, itemUuid: string, imageUrl: string) {
     const { storage } = FirebaseService.getInstance()
 
     const storageRef = storage.ref()
     const pictureRef = storageRef.child(
-      `collections/${collectionUuid}/${itemUuid}.${imageUrl.substr(
-        imageUrl.lastIndexOf('.') + 1,
-      )}`,
+      `collections/${collectionUuid}/${itemUuid}.${imageUrl.substr(imageUrl.lastIndexOf('.') + 1)}`,
     )
     const blob = await (await fetch(imageUrl)).blob()
     const snapshot = await pictureRef.put(blob)

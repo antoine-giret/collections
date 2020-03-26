@@ -22,9 +22,7 @@ function LoginScreen() {
   return (
     <ScrollView style={styles.wrapper}>
       <Text style={styles.baseline}>
-        <Trans i18nKey="login.baseline">
-          Each collection begins with a collector
-        </Trans>
+        <Trans i18nKey="login.baseline">Each collection begins with a collector</Trans>
       </Text>
       <Divider style={styles.divider} />
       <SocialIcon

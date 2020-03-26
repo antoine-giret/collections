@@ -18,12 +18,7 @@ function ProfileScreen() {
   return (
     <ScrollView style={styles.wrapper}>
       <View style={styles.actions}>
-        <Button
-          onPress={handleLogout}
-          style={styles.actionButton}
-          title={t('profile.actions.logout')}
-          type="outline"
-        />
+        <Button onPress={handleLogout} style={styles.actionButton} title={t('profile.actions.logout')} type="outline" />
       </View>
     </ScrollView>
   )
