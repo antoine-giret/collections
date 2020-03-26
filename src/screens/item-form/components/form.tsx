@@ -42,15 +42,15 @@ enum FormErrors {
 interface IProps {
   collection: Collection
   item: CollectionItem | undefined
-  onAdd: (collectionUpdated: Collection) => void
   onCameraShowed: () => void
+  onSubmit: (collectionUpdated: Collection) => void
 }
 
 function ItemForm({
   collection: { uuid: collectionUuid, type: collectionType },
   item,
   onCameraShowed,
-  onAdd,
+  onSubmit,
 }: IProps) {
   const [values, setValues] = useState<IValues>(() => {
     const { title } = item || { title: '' }
@@ -125,7 +125,7 @@ function ItemForm({
     }
 
     if (collectionUpdated) {
-      onAdd(collectionUpdated)
+      onSubmit(collectionUpdated)
     } else {
       setErrors(
         item
@@ -158,14 +158,14 @@ function ItemForm({
         {errors[FormErrors.NOT_CREATED] && (
           <Text style={styles.error}>
             <Trans i18nKey="collection_item.form.errors.not_created">
-              Unable to add item :(
+              Unable to add item
             </Trans>
           </Text>
         )}
         {errors[FormErrors.NOT_UPDATED] && (
           <Text style={styles.error}>
             <Trans i18nKey="collection_item.form.errors.not_updated">
-              Unable to update item :(
+              Unable to update item
             </Trans>
           </Text>
         )}

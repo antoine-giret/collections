@@ -39,6 +39,11 @@ export interface IFirebaseCreateCollection {
   type: string
 }
 
+export interface IFirebaseUpdateCollection {
+  uuid: string
+  title: string
+}
+
 export interface IFirebaseCreateCollectionItem {
   collectionUuid: string
   title: string

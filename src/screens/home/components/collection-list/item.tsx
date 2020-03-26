@@ -18,7 +18,7 @@ function CollectionItem({ collection }: IProps) {
   const { t } = useTranslation()
 
   function handlePress() {
-    navigate(Screens.COLLECTION, collection)
+    navigate(Screens.COLLECTION, { collection })
   }
 
   const { title, icon, items, updatedAt } = collection

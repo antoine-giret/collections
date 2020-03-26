@@ -11,6 +11,7 @@ import {
   IFirebaseCollectionItem,
   IFirebaseCreateCollection,
   IFirebaseCreateCollectionItem,
+  IFirebaseUpdateCollection,
   IFirebaseUpdateCollectionItem,
   IFirebaseMusicItem,
   MusicItem,
@@ -109,6 +110,36 @@ class CollectionService {
         createdAt: firestore.Timestamp.now(),
         updatedAt: firestore.Timestamp.now(),
       })
+      const doc = await ref.get()
+
+      return toCollection(doc.id, doc.data())
+    } catch (err) {
+      console.error(err)
+
+      return null
+    }
+  }
+
+  static async updateCollection(
+    input: IFirebaseUpdateCollection,
+  ): Promise<Collection | null> {
+    const {
+      db,
+      auth: { currentUser },
+    } = FirebaseService.getInstance()
+    const { uuid, ...inputRest } = input
+
+    if (!currentUser) return null
+
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>(
+      db.collection('collections')
+    )
+
+    try {
+      const ref = await collectionsRef.doc(uuid)
+
+      ref.update({ ...inputRest })
+
       const doc = await ref.get()
 
       return toCollection(doc.id, doc.data())

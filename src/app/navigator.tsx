@@ -2,8 +2,9 @@ import React, { useContext } from 'react'
 import { DarkTheme, NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useTranslation } from 'react-i18next'
+import { Icon } from 'react-native-elements'
 
-import { CollectionItem } from '../models'
+import { Collection, CollectionItem } from '../models'
 import LoginScreen from '../screens/login'
 import HomeScreen from '../screens/home'
 import CollectionScreen from '../screens/collection'
@@ -22,11 +23,9 @@ export default function AppNavigator() {
   const { user } = useContext(AppContext)
   const { t } = useTranslation()
 
-  // FIXME: get real type
-  function headerProps(navigation: any) {
+  function headerProps() {
     return {
       headerBackTitle: t('commons.actions.back'),
-      headerRight: () => <AccountButton navigation={navigation} />,
     }
   }
 
@@ -46,35 +45,60 @@ export default function AppNavigator() {
             <Stack.Screen
               component={CollectionScreen}
               name={Screens.COLLECTION}
-              options={({ navigation, route: { params } }) => ({
-                ...headerProps(navigation),
-                headerTitle: (params as any).title,
-              })}
+              options={({ navigation, route: { params } }) => {
+                const { collection } = params as { collection: Collection }
+
+                return {
+                  ...headerProps(),
+                  headerTitle: collection.title,
+                  headerRight: () => (
+                    <Icon
+                      color="#fff"
+                      containerStyle={{ marginHorizontal: 16 }}
+                      name="edit"
+                      onPress={() =>
+                        navigation.navigate(Screens.COLLECTION_FORM, {
+                          collection,
+                        })
+                      }
+                      type="material"
+                    />
+                  ),
+                }
+              }}
             />
             <Stack.Screen
               component={CollectionFormScreen}
               name={Screens.COLLECTION_FORM}
-              options={({ navigation }) => ({
-                ...headerProps(navigation),
-                headerTitle: t('navigator.new_collection'),
-              })}
+              options={({ route: { params } }) => {
+                const { collection } = params as {
+                  collection: Collection | undefined
+                }
+
+                return {
+                  ...headerProps(),
+                  headerTitle: collection
+                    ? collection.title
+                    : t('navigator.new_collection'),
+                }
+              }}
             />
             <Stack.Screen
               component={ProfileScreen}
               name={Screens.PROFILE}
-              options={({ navigation }) => ({
-                ...headerProps(navigation),
+              options={() => ({
+                ...headerProps(),
                 headerTitle: `${user.username}`,
               })}
             />
             <Stack.Screen
               component={ItemFormScreen}
               name={Screens.ITEM_FORM}
-              options={({ navigation, route: { params } }) => {
+              options={({ route: { params } }) => {
                 const { item } = params as { item: CollectionItem | undefined }
 
                 return {
-                  ...headerProps(navigation),
+                  ...headerProps(),
                   headerTitle: item ? item.title : t('navigator.new_item'),
                 }
               }}
@@ -82,8 +106,8 @@ export default function AppNavigator() {
             <Stack.Screen
               component={CameraScreen}
               name={Screens.CAMERA}
-              options={({ navigation }) => ({
-                ...headerProps(navigation),
+              options={() => ({
+                ...headerProps(),
                 headerTitle: t('navigator.new_item_camera'),
               })}
             />

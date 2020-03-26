@@ -7,12 +7,15 @@ const en = {
     },
     collection: {
       error: 'Inventory in progress',
+      creating: 'Starting collection',
       form: {
         actions: {
           add: 'Start collection',
+          update: 'Update collection',
         },
         errors: {
-          not_created: 'Unable to start collection :(',
+          not_created: 'Unable to start collection',
+          not_updated: 'Unable to update collection',
         },
         fields: {
           title: 'Title',
@@ -30,6 +33,7 @@ const en = {
         music: 'Music',
         other: 'Other',
       },
+      updating: 'Updating collection',
     },
     collection_item: {
       form: {
@@ -39,8 +43,8 @@ const en = {
         },
         creating: 'Adding item',
         errors: {
-          not_created: 'Unable to add item :(',
-          not_updated: 'Unable to update item :(',
+          not_created: 'Unable to add item',
+          not_updated: 'Unable to update item',
         },
         fields: {
           artist: 'Artist',

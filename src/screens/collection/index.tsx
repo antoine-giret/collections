@@ -18,12 +18,14 @@ function CollectionScreen() {
   const { params } = useRoute<{
     key: string
     name: string
-    params: { uuid: string; title: string }
+    params: { collection: Collection }
   }>()
   const { collections } = useContext(AppContext)
 
   useEffect(() => {
-    setCollection(collections.find(({ uuid }) => uuid === params.uuid) || null)
+    setCollection(
+      collections.find(({ uuid }) => uuid === params.collection.uuid) || null,
+    )
   }, [])
 
   function handleAddPress() {

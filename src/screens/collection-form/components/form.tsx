@@ -7,6 +7,7 @@ import { Collection, CollectionTypes } from '../../../models'
 import { CollectionService } from '../../../services'
 import TextField from '../../../components/text-field'
 import Select from '../../../components/select'
+import Loader from '../../../components/loader'
 
 interface IValues {
   title: string
@@ -16,19 +17,23 @@ interface IValues {
 enum FormErrors {
   TITLE,
   NOT_CREATED,
-}
-
-const initialValues: IValues = {
-  title: '',
-  type: CollectionTypes.MUSIC,
+  NOT_UPDATED,
 }
 
 interface IProps {
-  onAdd: (collection: Collection) => void
+  collection: Collection | undefined
+  onSubmit: (collection: Collection) => void
 }
 
-function CollectionForm({ onAdd }: IProps) {
-  const [values, setValues] = useState<IValues>(initialValues)
+function CollectionForm({ collection, onSubmit }: IProps) {
+  const [values, setValues] = useState<IValues>(() => {
+    const { title, type } = collection || {
+      title: '',
+      type: CollectionTypes.MUSIC,
+    }
+
+    return { title, type }
+  })
   const [errors, setErrors] = useState<{ [key: number]: boolean }>({})
   const [submitting, setSubmitting] = useState(false)
   const contentRef = useRef<ScrollView | null>(null)
@@ -54,15 +59,50 @@ function CollectionForm({ onAdd }: IProps) {
 
     setSubmitting(true)
 
-    const collection = await CollectionService.createCollection({ title, type })
+    let collectionSubmitted: Collection
+
     if (collection) {
-      onAdd(collection)
+      collectionSubmitted = await CollectionService.updateCollection({
+        uuid: collection.uuid,
+        title,
+      })
     } else {
-      setErrors({ [FormErrors.NOT_CREATED]: true })
+      collectionSubmitted = await CollectionService.createCollection({
+        title,
+        type,
+      })
+    }
+
+    if (collectionSubmitted) {
+      onSubmit(collectionSubmitted)
+    } else {
+      setErrors(
+        collection
+          ? { [FormErrors.NOT_UPDATED]: true }
+          : { [FormErrors.NOT_CREATED]: true },
+      )
       setSubmitting(false)
       if (contentRef.current)
         contentRef.current.scrollTo({ x: 0, y: 0, animated: true })
     }
+  }
+
+  if (submitting) {
+    return (
+      <Loader
+        text={
+          collection ? (
+            <Trans i18nKey="collection.form.updating">
+              Updating collection
+            </Trans>
+          ) : (
+            <Trans i18nKey="collection.form.creating">
+              Starting collection
+            </Trans>
+          )
+        }
+      />
+    )
   }
 
   return (
@@ -71,7 +111,14 @@ function CollectionForm({ onAdd }: IProps) {
         {errors[FormErrors.NOT_CREATED] && (
           <Text style={styles.error}>
             <Trans i18nKey="collection.form.errors.not_created">
-              Unable to start collection :(
+              Unable to start collection
+            </Trans>
+          </Text>
+        )}
+        {errors[FormErrors.NOT_UPDATED] && (
+          <Text style={styles.error}>
+            <Trans i18nKey="collection.form.errors.not_updated">
+              Unable to update collection
             </Trans>
           </Text>
         )}
@@ -81,25 +128,30 @@ function CollectionForm({ onAdd }: IProps) {
           onChangeText={handleTitleChange}
           value={values.title}
         />
-        <Select
-          items={[
-            CollectionTypes.MUSIC,
-            CollectionTypes.BOOK,
-            CollectionTypes.OTHER,
-          ].map(key => ({
-            key,
-            label: t(`collection.types.${key.toLowerCase()}`),
-          }))}
-          label={<Trans i18nKey="collection.form.fields.type">Type</Trans>}
-          onValueChange={handleTypeChange}
-          value={values.type}
-        />
+        {!collection && (
+          <Select
+            items={[
+              CollectionTypes.MUSIC,
+              CollectionTypes.BOOK,
+              CollectionTypes.OTHER,
+            ].map(key => ({
+              key,
+              label: t(`collection.types.${key.toLowerCase()}`),
+            }))}
+            label={<Trans i18nKey="collection.form.fields.type">Type</Trans>}
+            onValueChange={handleTypeChange}
+            value={values.type}
+          />
+        )}
       </ScrollView>
       <View style={styles.actions}>
         <Button
-          disabled={submitting}
           onPress={handleSubmit}
-          title={t('collection.form.actions.add').toUpperCase()}
+          title={t(
+            collection
+              ? 'collection.form.actions.update'
+              : 'collection.form.actions.add',
+          ).toUpperCase()}
         />
       </View>
     </SafeAreaView>
