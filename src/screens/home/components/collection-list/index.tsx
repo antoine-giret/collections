@@ -7,7 +7,7 @@ import Screens from '../../../../app/screens'
 import { Collection } from '../../../../models'
 import Fab from '../../../../components/fab'
 
-import CollectionActions, { OrderBy } from './actions'
+import CollectionListActions, { OrderBy } from './actions'
 import CollectionItem from './item'
 
 interface IProps {
@@ -39,7 +39,7 @@ function CollectionList({ collections }: IProps) {
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
         <ScrollView style={styles.content}>
-          <CollectionActions onSortChange={setOrderBy} />
+          <CollectionListActions onSortChange={setOrderBy} />
           <Divider style={styles.divider} />
           {sortedCollections.map(collection => (
             <CollectionItem collection={collection} key={collection.uuid} />

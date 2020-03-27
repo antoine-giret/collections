@@ -14,7 +14,7 @@ interface IProps {
   onSortChange: (orderBy: OrderBy) => void
 }
 
-function CollectionActions({ onSortChange }: IProps) {
+function CollectionListActions({ onSortChange }: IProps) {
   const sortMenuRef = useRef<Menu>()
   const { t } = useTranslation()
 
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CollectionActions
+export default CollectionListActions
