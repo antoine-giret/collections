@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Collection, CollectionItem } from '../models'
 import LoginScreen from '../screens/login'
 import HomeScreen from '../screens/home'
+import HomeHeaderActions from '../screens/home/components/header-actions'
 import CollectionScreen from '../screens/collection'
 import CollectionHeaderActions from '../screens/collection/components/header-actions'
 import CollectionFormScreen from '../screens/collection-form'
@@ -13,7 +14,6 @@ import ItemFormScreen from '../screens/item-form'
 import ItemFormHeaderActions from '../screens/item-form/components/header-actions'
 import CameraScreen from '../screens/camera'
 import ProfileScreen from '../screens/profile'
-import AccountButton from '../components/account-button'
 
 import AppContext from './context'
 import Screens from './screens'
@@ -39,7 +39,7 @@ export default function AppNavigator() {
               component={HomeScreen}
               name={Screens.HOME}
               options={({ navigation }) => ({
-                headerRight: () => <AccountButton navigation={navigation} />,
+                headerRight: () => <HomeHeaderActions navigation={navigation} />,
                 headerTitle: t('navigator.home'),
               })}
             />
