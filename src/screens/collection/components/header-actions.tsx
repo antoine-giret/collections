@@ -8,7 +8,7 @@ import Menu, { MenuItem } from 'react-native-material-menu'
 
 import AppContext from '../../../app/context'
 import Screens from '../../../app/screens'
-import Collection from '../../../models/collection'
+import { Collection } from '../../../models'
 import { CollectionService } from '../../../services'
 
 interface IProps {

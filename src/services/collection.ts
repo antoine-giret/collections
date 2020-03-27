@@ -11,6 +11,7 @@ import {
   IFirebaseCollectionItem,
   IFirebaseCreateCollection,
   IFirebaseCreateCollectionItem,
+  IFirebaseRemoveCollectionItem,
   IFirebaseUpdateCollection,
   IFirebaseUpdateCollectionItem,
   IFirebaseMusicItem,
@@ -212,6 +213,37 @@ class CollectionService {
           imageUrl: imageUrl || prevData.imageUrl,
           ...inputRest,
         },
+      })
+
+      const doc = await ref.get()
+
+      return toCollection(doc.id, doc.data())
+    } catch (err) {
+      console.error(err)
+
+      return null
+    }
+  }
+
+  static async removeCollectionItem(input: IFirebaseRemoveCollectionItem): Promise<Collection> {
+    const { db } = FirebaseService.getInstance()
+    const { uuid, collectionUuid } = input
+    const now = new Date()
+
+    const collectionsRef = <firestore.CollectionReference<IFirebaseCollection>>db.collection('collections')
+
+    try {
+      const ref = await collectionsRef.doc(collectionUuid)
+
+      const currentDoc = await ref.get()
+      const { items } = currentDoc.data()
+      const prevData = items[uuid]
+
+      if (!prevData) throw Error('Item not found')
+
+      ref.update({
+        updatedAt: now,
+        [`items.${uuid}`]: firestore.FieldValue.delete(),
       })
 
       const doc = await ref.get()

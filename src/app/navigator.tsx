@@ -10,6 +10,7 @@ import CollectionScreen from '../screens/collection'
 import CollectionHeaderActions from '../screens/collection/components/header-actions'
 import CollectionFormScreen from '../screens/collection-form'
 import ItemFormScreen from '../screens/item-form'
+import ItemFormHeaderActions from '../screens/item-form/components/header-actions'
 import CameraScreen from '../screens/camera'
 import ProfileScreen from '../screens/profile'
 import AccountButton from '../components/account-button'
@@ -80,12 +81,15 @@ export default function AppNavigator() {
             <Stack.Screen
               component={ItemFormScreen}
               name={Screens.ITEM_FORM}
-              options={({ route: { params } }) => {
-                const { item } = params as { item: CollectionItem | undefined }
+              options={({ navigation, route: { params } }) => {
+                const { collection, item } = params as { collection: Collection; item: CollectionItem | undefined }
 
                 return {
                   ...headerProps(),
                   headerTitle: item ? item.title : t('navigator.new_item'),
+                  headerRight: () => (
+                    <ItemFormHeaderActions collection={collection} item={item} navigation={navigation} />
+                  ),
                 }
               }}
             />

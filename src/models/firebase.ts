@@ -55,3 +55,8 @@ export interface IFirebaseUpdateCollectionItem {
   imageUrl?: string | null
   [key: string]: any
 }
+
+export interface IFirebaseRemoveCollectionItem {
+  uuid: string
+  collectionUuid: string
+}

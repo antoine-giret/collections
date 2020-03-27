@@ -55,6 +55,9 @@ const en = {
           photo: 'Photo',
           title: 'Title',
         },
+        remove_alert: {
+          title: 'Remove item ?',
+        },
         updating: 'Updating item',
       },
     },
