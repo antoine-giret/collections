@@ -28,11 +28,6 @@ const en = {
         loading: 'Inventory of your collections',
       },
       loading: 'Inventory of your collection',
-      orders: {
-        created_at: 'Starting date',
-        title: 'Title',
-        updated_at: 'Last update',
-      },
       remove_alert: {
         title: 'Remove collection ?',
       },
@@ -72,6 +67,11 @@ const en = {
         cancel: 'Cancel',
         edit: 'Edit',
         remove: 'Remove',
+      },
+      orders: {
+        created_at: 'Starting date',
+        title: 'Title',
+        updated_at: 'Last update',
       },
     },
     login: {

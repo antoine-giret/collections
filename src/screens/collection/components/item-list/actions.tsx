@@ -7,14 +7,13 @@ import Menu, { MenuItem } from 'react-native-material-menu'
 export enum OrderBy {
   TITLE,
   CREATED_AT,
-  UPDATED_AT,
 }
 
 interface IProps {
   onSortChange: (orderBy: OrderBy) => void
 }
 
-function CollectionListActions({ onSortChange }: IProps) {
+function CollectionItemListActions({ onSortChange }: IProps) {
   const sortMenuRef = useRef<Menu>()
   const { t } = useTranslation()
 
@@ -36,7 +35,6 @@ function CollectionListActions({ onSortChange }: IProps) {
   const orders = [
     { key: OrderBy.TITLE, title: t('commons.orders.title') },
     { key: OrderBy.CREATED_AT, title: t('commons.orders.created_at') },
-    { key: OrderBy.UPDATED_AT, title: t('commons.orders.updated_at') },
   ]
 
   return (
@@ -66,4 +64,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CollectionListActions
+export default CollectionItemListActions
