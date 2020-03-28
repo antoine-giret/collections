@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Trans } from 'react-i18next'
 import { Divider } from 'react-native-elements'
 
 import { CollectionItem } from '../../../../models'
@@ -26,6 +27,16 @@ function ItemList({ items, onItemPress }: IProps) {
     sortItems([...items])
   }, [orderBy])
 
+  if (sortedItems.length === 0) {
+    return (
+      <View style={styles.emptyState}>
+        <Text style={styles.emptyStateText}>
+          <Trans i18nKey="collection.empty_state">Click below to start your collection</Trans>
+        </Text>
+      </View>
+    )
+  }
+
   return (
     <ScrollView style={styles.wrapper}>
       <CollectionItemListActions onSortChange={setOrderBy} />
@@ -40,6 +51,16 @@ function ItemList({ items, onItemPress }: IProps) {
 }
 
 const styles = StyleSheet.create({
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+  },
+  emptyStateText: {
+    color: '#ccc',
+    fontSize: 16,
+    textAlign: 'center',
+  },
   wrapper: {
     paddingHorizontal: 8,
     paddingVertical: 16,

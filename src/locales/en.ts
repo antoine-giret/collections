@@ -8,6 +8,7 @@ const en = {
     collection: {
       error: 'Inventory in progress',
       creating: 'Starting collection',
+      empty_state: 'Click below to start your collection',
       form: {
         actions: {
           add: 'Start collection',
