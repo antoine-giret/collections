@@ -33,6 +33,7 @@ const en = {
         title: 'Remove collection ?',
       },
       types: {
+        board_game: 'Board Game',
         book: 'Book',
         music: 'Music',
         other: 'Other',
@@ -53,6 +54,9 @@ const en = {
         fields: {
           artist: 'Artist',
           author: 'Author',
+          editor: 'Editor',
+          max_players: 'Players max.',
+          min_players: 'Players min.',
           photo: 'Photo',
           title: 'Title',
         },

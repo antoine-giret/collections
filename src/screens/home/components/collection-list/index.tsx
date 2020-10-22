@@ -32,7 +32,7 @@ function CollectionList({ collections }: IProps) {
   }, [orderBy])
 
   function handleAddPress() {
-    navigate(Screens.COLLECTION_FORM)
+    navigate(Screens.COLLECTION_FORM, {})
   }
 
   return (

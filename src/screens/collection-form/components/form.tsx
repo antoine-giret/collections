@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { ScrollView, SafeAreaView, StyleSheet, View, Text } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -117,10 +117,12 @@ function CollectionForm({ collection, onSubmit }: IProps) {
         />
         {!collection && (
           <Select
-            items={[CollectionTypes.MUSIC, CollectionTypes.BOOK, CollectionTypes.OTHER].map(key => ({
-              key,
-              label: t(`collection.types.${key.toLowerCase()}`),
-            }))}
+            items={[CollectionTypes.MUSIC, CollectionTypes.BOOK, CollectionTypes.BOARD_GAME, CollectionTypes.OTHER].map(
+              key => ({
+                key,
+                label: t(`collection.types.${key.toLowerCase()}`),
+              }),
+            )}
             label={<Trans i18nKey="collection.form.fields.type">Type</Trans>}
             onValueChange={handleTypeChange}
             value={values.type}

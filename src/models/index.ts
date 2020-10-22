@@ -1,4 +1,5 @@
 import {
+  IFirebaseBoardGameItem,
   IFirebaseBookItem,
   IFirebaseCollection,
   IFirebaseCollectionItem,
@@ -15,12 +16,15 @@ import Collection, { CollectionTypes } from './collection'
 import CollectionItem from './collection-item'
 import MusicItem from './music-item'
 import BookItem from './book-item'
+import BoardGameItem from './board-game-item'
 
 export {
+  BoardGameItem,
   BookItem,
   Collection,
   CollectionItem,
   CollectionTypes,
+  IFirebaseBoardGameItem,
   IFirebaseBookItem,
   IFirebaseCollection,
   IFirebaseCollectionItem,

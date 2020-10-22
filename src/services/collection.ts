@@ -2,19 +2,21 @@ import { firestore } from 'firebase'
 import { generate } from 'shortid'
 
 import {
+  BoardGameItem,
   BookItem,
   Collection,
   CollectionItem,
   CollectionTypes,
+  IFirebaseBoardGameItem,
   IFirebaseBookItem,
   IFirebaseCollection,
   IFirebaseCollectionItem,
   IFirebaseCreateCollection,
   IFirebaseCreateCollectionItem,
+  IFirebaseMusicItem,
   IFirebaseRemoveCollectionItem,
   IFirebaseUpdateCollection,
   IFirebaseUpdateCollectionItem,
-  IFirebaseMusicItem,
   MusicItem,
 } from '../models'
 
@@ -35,6 +37,12 @@ function toCollectionItem(uuid: string, type: CollectionTypes, item: IFirebaseCo
     return new BookItem(uuid, title, author, imageUrl, createdAt.toDate())
   }
 
+  if (type === CollectionTypes.BOARD_GAME) {
+    const { editor, minPlayers, maxPlayers, duration } = item as IFirebaseBoardGameItem
+
+    return new BoardGameItem(uuid, title, editor, minPlayers, maxPlayers, duration, imageUrl, createdAt.toDate())
+  }
+
   return new CollectionItem(uuid, title, imageUrl, createdAt.toDate())
 }
 
@@ -42,6 +50,7 @@ function toCollection(uuid: string, { title, type: _type, items: _items, created
   let type = CollectionTypes.OTHER
   if (_type === 'MUSIC') type = CollectionTypes.MUSIC
   else if (_type === 'BOOK') type = CollectionTypes.BOOK
+  else if (_type === 'BOARD_GAME') type = CollectionTypes.BOARD_GAME
 
   const items = _items || {}
 

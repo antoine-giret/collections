@@ -5,7 +5,7 @@ import { Trans, useTranslation } from 'react-i18next'
 
 import AppContext from '../../../app/context'
 import { CollectionService } from '../../../services'
-import { BookItem, Collection, CollectionItem, CollectionTypes, MusicItem } from '../../../models'
+import { BoardGameItem, BookItem, Collection, CollectionItem, CollectionTypes, MusicItem } from '../../../models'
 import TextField from '../../../components/text-field'
 import Loader from '../../../components/loader'
 
@@ -15,12 +15,20 @@ export interface IValues {
   artist?: string
 
   author?: string
+
+  editor?: string
+  minPlayers?: number
+  maxPlayers?: number
+  duration?: number
 }
 
 enum FormErrors {
   TITLE,
   ARTIST,
   AUTHOR,
+  EDITOR,
+  MIN_PLAYERS,
+  MAX_PLAYERS,
   NOT_CREATED,
   NOT_UPDATED,
 }
@@ -47,10 +55,22 @@ function ItemForm({
 
       return { ...commonValues, artist }
     }
+
     if (collectionType === CollectionTypes.BOOK) {
       const { author } = (item as BookItem) || { author: '' }
 
       return { ...commonValues, author }
+    }
+
+    if (collectionType === CollectionTypes.BOARD_GAME) {
+      const { editor, minPlayers, maxPlayers, duration } = (item as BoardGameItem) || {
+        editor: '',
+        minPlayers: 2,
+        maxPlayers: 4,
+        duration: 1800,
+      }
+
+      return { ...commonValues, editor, minPlayers, maxPlayers, duration }
     }
 
     return commonValues
@@ -85,6 +105,14 @@ function ItemForm({
       const { author } = values
 
       if (!author) newErrors[FormErrors.AUTHOR] = true
+    }
+
+    if (collectionType === CollectionTypes.BOARD_GAME) {
+      const { editor, minPlayers, maxPlayers } = values
+
+      if (!editor) newErrors[FormErrors.EDITOR] = true
+      if (!Number.isInteger(minPlayers)) newErrors[FormErrors.MIN_PLAYERS] = true
+      if (!Number.isInteger(maxPlayers)) newErrors[FormErrors.MAX_PLAYERS] = true
     }
 
     setErrors(newErrors)
@@ -167,6 +195,30 @@ function ItemForm({
             onChangeText={handleChange('author')}
             value={values.author}
           />
+        )}
+        {collectionType === CollectionTypes.BOARD_GAME && (
+          <>
+            <TextField
+              error={errors[FormErrors.EDITOR]}
+              label={<Trans i18nKey="collection_item.form.fields.editor">Editor</Trans>}
+              onChangeText={handleChange('editor')}
+              value={values.editor}
+            />
+            <TextField
+              error={errors[FormErrors.MIN_PLAYERS]}
+              keyboardType="numeric"
+              label={<Trans i18nKey="collection_item.form.fields.min_players">Players min.</Trans>}
+              onChangeText={handleChange('minPlayers')}
+              value={values.minPlayers.toString()}
+            />
+            <TextField
+              error={errors[FormErrors.MAX_PLAYERS]}
+              keyboardType="numeric"
+              label={<Trans i18nKey="collection_item.form.fields.max_players">Players max.</Trans>}
+              onChangeText={handleChange('maxPlayers')}
+              value={values.maxPlayers.toString()}
+            />
+          </>
         )}
         <View style={styles.imageWrapper}>
           <Text style={styles.label}>

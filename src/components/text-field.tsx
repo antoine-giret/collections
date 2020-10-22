@@ -1,14 +1,15 @@
 import React, { useRef } from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { KeyboardType, StyleSheet, Text, TextInput, View } from 'react-native'
 
 interface IProps {
   error?: boolean
   label: React.ReactNode
   onChangeText: (value: string) => void
+  keyboardType?: KeyboardType
   value: string
 }
 
-function TextField({ error, label, value, onChangeText }: IProps) {
+function TextField({ error, label, value, keyboardType, onChangeText }: IProps) {
   const inputRef = useRef<TextInput | null>(null)
 
   function handleLabelPress() {
@@ -21,6 +22,7 @@ function TextField({ error, label, value, onChangeText }: IProps) {
         {label}
       </Text>
       <TextInput
+        keyboardType={keyboardType || 'default'}
         onChangeText={onChangeText}
         ref={inputRef}
         style={[styles.input, { borderColor: error ? '#f44336' : '#ccc' }]}

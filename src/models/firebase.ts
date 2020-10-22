@@ -20,6 +20,13 @@ export interface IFirebaseBookItem extends IFirebaseCollectionItem {
   author: string
 }
 
+export interface IFirebaseBoardGameItem extends IFirebaseCollectionItem {
+  editor: string
+  minPlayers: number
+  maxPlayers: number
+  duration: number
+}
+
 type TFirebaseCollectionItem = IFirebaseCollectionItem | IFirebaseMusicItem | IFirebaseBookItem
 
 export interface IFirebaseCollection {
